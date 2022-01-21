@@ -76,9 +76,7 @@ public class Player
 						System.out.println("You passsed GO and collected $200");
 					}
 
-				System.out.println(
-						"You rolled: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
-
+				System.out.println("You rolled: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
 				landOnSquare();
 
 				if (DiceRoller.doubles == true)
@@ -88,6 +86,7 @@ public class Player
 						if (timesRolledDoubles == 3)
 							{
 								goToJail();
+								inJailTurn();
 							} else
 							{
 								System.out.println("You rolled doubles, so you get to roll again!");
@@ -289,14 +288,12 @@ public class Player
 												playerMoney += freeParkingMoney;
 												freeParkingMoney = 0;
 											} else
-											if (MonopDriver.board[playerLocation].getName().equals("Income_Tax")
-													|| MonopDriver.board[playerLocation].getName().equals("Luxury_Tax"))
+											if (MonopDriver.board[playerLocation].getName().equals("Income_Tax") || MonopDriver.board[playerLocation].getName().equals("Luxury_Tax"))
 												{
-													System.out.println("You have been taxed $"
-															+ MonopDriver.board[playerLocation].getCost());
+													System.out.println("You have been taxed $" + MonopDriver.board[playerLocation].getCost());
 													freeParkingMoney += MonopDriver.board[playerLocation].getCost();
 													playerMoney -= MonopDriver.board[playerLocation].getCost();
-													;
+													
 												}
 
 											// chance cards

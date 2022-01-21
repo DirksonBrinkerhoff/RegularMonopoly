@@ -13,6 +13,7 @@ public class MonopDriver
 				fillBoard();
 				Player.greetPlayer();
 				Player.turnMenu();
+				//Player.landOnSquare();
 			}
 
 		public static void fillBoard() throws FileNotFoundException
@@ -93,15 +94,15 @@ public class MonopDriver
 					//}
 
 				//Player.greetPlayer();
-				while (Player.stillPlaying == true)
-					{
-						if (Player.inJail == false)
-							{
-								Player.turnMenu();
-							} else
-							{
-								Player.inJailTurn();
-							}
-					}
+			//	while (Player.stillPlaying == true)
+					//{
+						//if (Player.inJail == false)
+						//{
+								//Player.turnMenu();
+							//} else
+							//{
+							//	Player.inJailTurn();
+							//}
+				//	}
 			}
 	}
