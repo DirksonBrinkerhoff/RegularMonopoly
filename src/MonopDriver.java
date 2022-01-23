@@ -13,6 +13,10 @@ public class MonopDriver
 				fillBoard();
 				Player.greetPlayer();
 				Player.turnMenu();
+				System.out.println(Player.playerLocation);
+				Player.turnMenu();
+				System.out.println(Player.playerLocation);
+
 				//Player.landOnSquare();
 			}
 
