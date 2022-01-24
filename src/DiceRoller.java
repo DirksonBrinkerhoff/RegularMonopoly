@@ -14,8 +14,8 @@ public class DiceRoller
 			      //roll the dice
 				  int diceRollNumber = (int) (Math.random()*j)+1;
 				  sumOfDice = diceRollNumber+sumOfDice;
-				  System.out.println("You rolled a "+diceRollNumber+".");
-			      
+				  System.out.println("You rolled a "+diceRollNumber);
+				  
 			      if(k == 0)
 			    	  {
 			    		  dieOne = diceRollNumber;
@@ -28,9 +28,11 @@ public class DiceRoller
 			 if(dieOne == dieTwo)
 				 {
 					doubles = true;
+					
 					System.out.println("You rolled doubles!");
 				 }
-			 System.out.print("Your total is ");
+			 //System.out.println();
 			 return sumOfDice;
+		
 		    }
 	}

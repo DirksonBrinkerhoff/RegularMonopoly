@@ -12,15 +12,19 @@ public class MonopDriver
 			{
 				fillBoard();
 				Player.greetPlayer();
-			for(int i = 0; i < board.length; i++)	
-				{
-					Player.turnMenu();
-					System.out.println(Player.playerLocation);
-					Player.landOnSquare();
-					//Player.turnMenu();
-					//System.out.println(Player.playerLocation);
-				}
-				//Player.landOnSquare();
+			
+				
+//				for(BoardSpace b : board)
+//					{
+//						System.out.println(b.getType());
+//					}
+				
+				while(Player.stillPlaying)
+					{
+						Player.turnMenu();
+						System.out.println(Player.playerLocation);
+						Player.landOnSquare();
+					}
 			}
 
 		public static void fillBoard() throws FileNotFoundException
@@ -66,7 +70,7 @@ public class MonopDriver
 									int r2 = file.nextInt();
 									int r3 = file.nextInt();
 									int r4 = file.nextInt();
-									board[i] = new Railroads("Railroads", n, o, c, l, r1, r2, r3, r4);
+									board[i] = new Railroads("Railroad", n, o, c, l, r1, r2, r3, r4);
 								}
 
 							else

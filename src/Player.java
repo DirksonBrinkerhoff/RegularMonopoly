@@ -11,13 +11,10 @@ public class Player
 		static int menuInput;
 		static int statInput;
 		static int inventoryCounter;
-//	static int numberOfPropertiesOwned;
-//	static int numberOfUtilitiesOwned;
-//	static int numberOfRailroadsOwned;
 		static int freeParkingMoney;
 		static int timesRolledDoubles = 0;
 		static Scanner userInput = new Scanner(System.in);
-		static ArrayList<String> displayInventory = new ArrayList<String>();
+		//static ArrayList<String> displayInventory = new ArrayList<String>();
 		static ArrayList<BoardSpace> inventory = new ArrayList<BoardSpace>();
 		
 		public static void greetPlayer()
@@ -25,13 +22,13 @@ public class Player
 				System.out.println("What is your name?");
 				playerName = userInput.nextLine();
 				System.out.println("Welcome, " + playerName + "!");
+				System.out.println();
 			}
-
 		public static void turnMenu()
 			{
 				System.out.println(playerName + ", it's your turn!\nWould you like to...\n1) Roll the dice\n2) View your stats");
 				menuInput = userInput.nextInt();
-
+				
 				if (menuInput == 1)
 					{
 						movePlayer();
@@ -45,48 +42,23 @@ public class Player
 							turnMenu();
 						}
 			}
-
 		public static void displayPlayerStats()
 			{
 				System.out.println("Your name is: " + playerName);
 				System.out.println("Current balance: $" + playerMoney);
 				
-				for(String i: displayInventory)
+				for(BoardSpace k : inventory)
 					{
-						String ownedSpaces = i;
-						inventoryCounter++;
-						
-						if(inventoryCounter == 0)
-							{
-								inventoryCounter = 0;
-								turnMenu();
-							}
-						else if(inventoryCounter == 1)
-							{
-								System.out.println("You own: ");
-								System.out.println(ownedSpaces);
-							}
-						else
-							{
-								System.out.println(", ");
-								System.out.println(ownedSpaces);
-							}
+						System.out.print(k.getType() + " ");
+						System.out.println(k.getName());						
 					}
-				inventoryCounter = 0;
-				System.out.println();
-				System.out.println();
+				
 				turnMenu();
-
-//		System.out.println("Number of properties owned: " + numberOfPropertiesOwned);
-//		System.out.println("Number of utilities owned: " + numberOfUtilitiesOwned);
-//		System.out.println("Number of railroads owned: " + numberOfRailroadsOwned);
+				System.out.println();
 			}
 		public static void movePlayer()
 			{
-				System.out.println("Press space to roll the dice.");
-
 				int playerRoll = DiceRoller.rollDice(2, 6);
-
 				if ((playerLocation + playerRoll) < 39)
 					{
 						playerLocation += playerRoll;
@@ -98,7 +70,7 @@ public class Player
 						System.out.println("You passsed GO and collected $200");
 					}
 
-				System.out.println("You rolled: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
+				System.out.println("Your total: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
 				landOnSquare();
 
 				if (DiceRoller.doubles == true)
@@ -119,10 +91,13 @@ public class Player
 				}
 		public static void checkForBankruptcy()
 			{
-				if (playerMoney <= 0)
+				
+				if(playerMoney <= 0)
 					{
-						System.out.println("You've gone bankrupt!");
+						System.out.println("You've gone bankrupt! You lose!");
+						System.exit(0);
 						stillPlaying = false;
+						
 					}
 			}
 
@@ -150,7 +125,10 @@ public class Player
 										checkForBankruptcy();
 										inventory.add(MonopDriver.board[playerLocation]);
 										turnMenu();
-										// numberOfPropertiesOwned++;
+									}
+								else
+									{
+										turnMenu();
 									}
 								// need to implement the 'developing' feature (where you can only buy houses if
 								// you own all of that color)
@@ -163,60 +141,54 @@ public class Player
 
 									if (menuInput == 1)
 										{
-											if (((Properties) MonopDriver.board[playerLocation])
-													.getNumberOfHousesOwned() >= 4)
+											if (((Properties) MonopDriver.board[playerLocation]).getNumberOfHousesOwned() >= 4)
 												{
-													System.out.println(
-															"Sorry, you have already bought the maximum amount of property on this space.");
+													System.out.println("Sorry, you have already bought the maximum amount of property on this space.");
 												} else
 												{
 													// this is broken and I don't know how to fix it at this time
-													((Properties) MonopDriver.board[playerLocation])
-															.setNumberOfHousesOwned(
-																	((Properties) MonopDriver.board[playerLocation])
-																			.getNumberOfHousesOwned() + 1);
+//													((Properties) MonopDriver.board[playerLocation])
+//															.setNumberOfHousesOwned(
+//																	((Properties) MonopDriver.board[playerLocation])
+//																			.getNumberOfHousesOwned() + 1);
 												}
 										}
 								} 
 							else
 								{
-									System.out.println("This property is already owned by"
-											+ MonopDriver.board[playerLocation].getOwner()
-											+ ", you now must pay rent.");
+									System.out.println("This property is already owned by" + MonopDriver.board[playerLocation].getOwner() + ", you now must pay rent.");
 									if (((Properties) MonopDriver.board[playerLocation]).getNumberOfHousesOwned() == 0)
 										{
-											playerMoney -= ((Properties) MonopDriver.board[playerLocation])
-													.getBasicRent();
-										} else
-										if (((Properties) MonopDriver.board[playerLocation])
-												.getNumberOfHousesOwned() == 1)
+											playerMoney -= ((Properties) MonopDriver.board[playerLocation]).getBasicRent();
+										} 
+									else
+										if (((Properties) MonopDriver.board[playerLocation]).getNumberOfHousesOwned() == 1)
 											{
-												playerMoney -= ((Properties) MonopDriver.board[playerLocation])
-														.getOneHouseRent();
-											} else
-											if (((Properties) MonopDriver.board[playerLocation])
-													.getNumberOfHousesOwned() == 2)
+												playerMoney -= ((Properties) MonopDriver.board[playerLocation]).getOneHouseRent();
+											} 
+										else
+											if (((Properties) MonopDriver.board[playerLocation]).getNumberOfHousesOwned() == 2)
 												{
-													playerMoney -= ((Properties) MonopDriver.board[playerLocation])
-															.getTwoHouseRent();
-												} else
-												if (((Properties) MonopDriver.board[playerLocation])
-														.getNumberOfHousesOwned() == 3)
+													playerMoney -= ((Properties) MonopDriver.board[playerLocation]).getTwoHouseRent();
+												} 
+											else
+												if (((Properties) MonopDriver.board[playerLocation]).getNumberOfHousesOwned() == 3)
 													{
-														playerMoney -= ((Properties) MonopDriver.board[playerLocation])
-																.getThreeHouseRent();
-													} else
-													if (((Properties) MonopDriver.board[playerLocation])
-															.getNumberOfHousesOwned() == 4)
+														playerMoney -= ((Properties) MonopDriver.board[playerLocation]).getThreeHouseRent();
+													} 
+												else
+													if (((Properties) MonopDriver.board[playerLocation]).getNumberOfHousesOwned() == 4)
 														{
-															playerMoney -= ((Properties) MonopDriver.board[playerLocation])
-																	.getHotelRent();
+															playerMoney -= ((Properties) MonopDriver.board[playerLocation]).getHotelRent();
 														}
-
 									checkForBankruptcy();
 								}
-					} else
-					if (MonopDriver.board[playerLocation].getType().equals("Utility"))
+					} 
+				
+				
+				
+				
+				else if (MonopDriver.board[playerLocation].getType().equals("Utility"))
 						{
 							if (MonopDriver.board[playerLocation].getOwner().equals("none"))
 								{
@@ -229,12 +201,15 @@ public class Player
 											playerMoney -= MonopDriver.board[playerLocation].getCost();
 											checkForBankruptcy();
 											inventory.add(MonopDriver.board[playerLocation]);
+											turnMenu();
 										}
-								} else
+								} 
+							else
 								if (MonopDriver.board[playerLocation].getOwner().equals(playerName))
 									{
 										System.out.println("You already own this utility");
-									} else
+									} 
+								else
 									{
 										System.out.println("This utility is already owned by "
 												+ MonopDriver.board[playerLocation].getOwner()
@@ -242,13 +217,14 @@ public class Player
 										// need to figure out how to search the array for everything that has one
 										// specific field
 									}
-						} else
-						if (MonopDriver.board[playerLocation].getType().equals("Railroad"))
+						} 
+					
+					else if (MonopDriver.board[playerLocation].getType().equals("Railroad"))
 							{
+								System.out.println("Hellow");
 								if (MonopDriver.board[playerLocation].getOwner().equals("none"))
 									{
-										System.out.println(
-												"This location is not owned, would you like to buy it?\n1) Yes\n2) No");
+										System.out.println("This location is not owned, would you like to buy it?\n1) Yes\n2) No");
 										menuInput = userInput.nextInt();
 
 										if (menuInput == 1)
@@ -257,12 +233,15 @@ public class Player
 												playerMoney -= MonopDriver.board[playerLocation].getCost();
 												checkForBankruptcy();
 												inventory.add(MonopDriver.board[playerLocation]);
+												turnMenu();
 											}
-									} else
+									} 
+								else
 									if (MonopDriver.board[playerLocation].getOwner().equals(playerName))
 										{
 											System.out.println("You already own this railroad");
-										} else
+										} 
+									else
 										{
 											// once again need to figure the comment from above out
 
@@ -289,24 +268,28 @@ public class Player
 
 											checkForBankruptcy();
 										}
-							} else
+							} 
+						else
 							{
 								if (MonopDriver.board[playerLocation].getName().equals("GO"))
 									{
 										playerMoney += MonopDriver.board[playerLocation].getCost();
 										System.out.println(
 												"You collected $" + MonopDriver.board[playerLocation].getCost());
-									} else
+									} 
+								else
 									if (MonopDriver.board[playerLocation].getName().equals("Go_To_Jail"))
 										{
 											goToJail();
-										} else
+										} 
+									else
 										if (MonopDriver.board[playerLocation].getName().equals("Free_Parking"))
 											{
 												System.out.println("You won " + freeParkingMoney + "!");
 												playerMoney += freeParkingMoney;
 												freeParkingMoney = 0;
-											} else
+											} 
+										else
 											if (MonopDriver.board[playerLocation].getName().equals("Income_Tax") || MonopDriver.board[playerLocation].getName().equals("Luxury_Tax"))
 												{
 													System.out.println("You have been taxed $" + MonopDriver.board[playerLocation].getCost());
@@ -315,6 +298,7 @@ public class Player
 													
 												}
 
+								
 											// chance cards
 											else
 												if (MonopDriver.board[playerLocation].getName().equals("Chance"))
@@ -322,52 +306,53 @@ public class Player
 														int chanceNumber = (int) (Math.random() * 3) + 1;
 														if (chanceNumber == 1)
 															{
-																System.out.println(
-																		"You're wife left you. Give 50% of your money to her.");
+																System.out.println("You're wife left you. Give 50% of your money to her.");
 																playerMoney = playerMoney / 2;
+																turnMenu();
 															}
 
 														else
 															if (chanceNumber == 2)
 																{
-																	System.out.println(
-																			"You got your secretary pregnant. Pay $50.");
+																	System.out.println("You got your secretary pregnant. Pay $50.");
 																	playerMoney = playerMoney - 50;
-																} else
+																	turnMenu();
+																} 
+															else
 																{
 																	System.out.println("You found $100 on the street.");
 																	playerMoney = playerMoney + 100;
+																	turnMenu();
 																}
 													}
+												
+												
 												// community chest
 												else
-													if (MonopDriver.board[playerLocation].getName()
-															.equals("Community Chest"))
+													if (MonopDriver.board[playerLocation].getName().equals("Community Chest"))
 														{
 															int chestNumber = (int) (Math.random() * 3) + 1;
 															if (chestNumber == 1)
 																{
-																	System.out.println(
-																			"Your dog needs a surgery. Pay the vet $100.");
+																	System.out.println("Your dog needs a surgery. Pay the vet $100.");
 																	playerMoney = playerMoney / 2;
+																	turnMenu();
 																}
 
-															else
-																if (chestNumber == 2)
+															else if (chestNumber == 2)
 																	{
-																		System.out.println(
-																				"You have turned to a life of crime. You mugged a teenage girl for $35.");
+																		System.out.println("You have turned to a life of crime. You mugged a teenage girl for $35.");
 																		playerMoney = playerMoney + 35;
-																	} else
+																		turnMenu();
+																	} 
+																else
 																	{
-																		System.out.println(
-																				"You bought the Fortnite battle pass ofr $10.");
+																		System.out.println("You bought the Fortnite battle pass ofr $10.");
 																		playerMoney = playerMoney - 10;
+																		turnMenu();
 																	}
 														}
-
 							}
-
 			}
 
 		public static void inJailTurn()
