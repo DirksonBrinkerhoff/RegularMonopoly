@@ -9,14 +9,17 @@ public class Player
 		static boolean stillPlaying = true;
 		static String playerName;
 		static int menuInput;
+		static int statInput;
+		static int inventoryCounter;
 //	static int numberOfPropertiesOwned;
 //	static int numberOfUtilitiesOwned;
 //	static int numberOfRailroadsOwned;
 		static int freeParkingMoney;
 		static int timesRolledDoubles = 0;
 		static Scanner userInput = new Scanner(System.in);
+		static ArrayList<String> displayInventory = new ArrayList<String>();
 		static ArrayList<BoardSpace> inventory = new ArrayList<BoardSpace>();
-
+		
 		public static void greetPlayer()
 			{
 				System.out.println("What is your name?");
@@ -26,8 +29,7 @@ public class Player
 
 		public static void turnMenu()
 			{
-				System.out.println(
-						playerName + ", it's your turn!\nWould you like to...\n1) Roll the dice\n2) View your stats");
+				System.out.println(playerName + ", it's your turn!\nWould you like to...\n1) Roll the dice\n2) View your stats");
 				menuInput = userInput.nextInt();
 
 				if (menuInput == 1)
@@ -48,11 +50,32 @@ public class Player
 			{
 				System.out.println("Your name is: " + playerName);
 				System.out.println("Current balance: $" + playerMoney);
-
-				for (int i = 0; i < inventory.size(); i++)
+				
+				for(String i: displayInventory)
 					{
-
+						String ownedSpaces = i;
+						inventoryCounter++;
+						
+						if(inventoryCounter == 0)
+							{
+								inventoryCounter = 0;
+								turnMenu();
+							}
+						else if(inventoryCounter == 1)
+							{
+								System.out.println("You own: ");
+								System.out.println(ownedSpaces);
+							}
+						else
+							{
+								System.out.println(", ");
+								System.out.println(ownedSpaces);
+							}
 					}
+				inventoryCounter = 0;
+				System.out.println();
+				System.out.println();
+				turnMenu();
 
 //		System.out.println("Number of properties owned: " + numberOfPropertiesOwned);
 //		System.out.println("Number of utilities owned: " + numberOfUtilitiesOwned);
@@ -61,7 +84,6 @@ public class Player
 		public static void movePlayer()
 			{
 				System.out.println("Press space to roll the dice.");
-				// String rollDiceInput =
 
 				int playerRoll = DiceRoller.rollDice(2, 6);
 
@@ -87,17 +109,14 @@ public class Player
 							{
 								goToJail();
 								inJailTurn();
-							} else
+							} 
+						else
 							{
 								System.out.println("You rolled doubles, so you get to roll again!");
 								movePlayer();
 							}
-					} else
-					{
-
-					}
-			}
-
+					} 
+				}
 		public static void checkForBankruptcy()
 			{
 				if (playerMoney <= 0)
@@ -112,6 +131,7 @@ public class Player
 				playerLocation = 10;
 				System.out.println("You are now in jail");
 				inJail = true;
+				inJailTurn();
 			}
 
 		public static void landOnSquare()
@@ -120,8 +140,7 @@ public class Player
 					{
 						if (MonopDriver.board[playerLocation].getOwner().equals("none"))
 							{
-								System.out.println(
-										"This location is not owned, would you like to buy it?\n1) Yes\n2) No");
+								System.out.println("This location is not owned, would you like to buy it?\n1) Yes\n2) No");
 								menuInput = userInput.nextInt();
 
 								if (menuInput == 1)
@@ -130,16 +149,16 @@ public class Player
 										playerMoney -= MonopDriver.board[playerLocation].getCost();
 										checkForBankruptcy();
 										inventory.add(MonopDriver.board[playerLocation]);
-
+										turnMenu();
 										// numberOfPropertiesOwned++;
 									}
 								// need to implement the 'developing' feature (where you can only buy houses if
 								// you own all of that color)
-							} else
+							} 
+						else
 							if (MonopDriver.board[playerLocation].getOwner().equals(playerName))
 								{
-									System.out.println(
-											"You already own this property...\nWould you like to buy houses or a hotel?\n1) Yes\n2) No");
+									System.out.println("You already own this property...\nWould you like to buy houses or a hotel?\n1) Yes\n2) No");
 									menuInput = userInput.nextInt();
 
 									if (menuInput == 1)
@@ -158,7 +177,8 @@ public class Player
 																			.getNumberOfHousesOwned() + 1);
 												}
 										}
-								} else
+								} 
+							else
 								{
 									System.out.println("This property is already owned by"
 											+ MonopDriver.board[playerLocation].getOwner()
@@ -200,8 +220,7 @@ public class Player
 						{
 							if (MonopDriver.board[playerLocation].getOwner().equals("none"))
 								{
-									System.out.println(
-											"This location is not owned, would you like to buy it?\n1) Yes\n2) No");
+									System.out.println("This location is not owned, would you like to buy it?\n1) Yes\n2) No");
 									menuInput = userInput.nextInt();
 
 									if (menuInput == 1)
@@ -363,16 +382,20 @@ public class Player
 						playerMoney -= 50;
 						System.out.println("You have now payed the fee and are free to go.");
 						inJail = false;
-					} else
+						turnMenu();
+					} 
+				else
 					{
 						DiceRoller.rollDice(2, 6);
 						if (DiceRoller.doubles == true)
 							{
 								System.out.println("You rolled doubles and are free to go.");
 								inJail = false;
+								turnMenu();
 							} else
 							{
 								System.out.println("You failed to roll doubles.");
+								inJailTurn();
 							}
 					}
 			}

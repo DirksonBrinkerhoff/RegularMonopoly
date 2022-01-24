@@ -11,12 +11,15 @@ public class MonopDriver
 		public static void main(String[] args) throws FileNotFoundException
 			{
 				fillBoard();
-				//Player.greetPlayer();
-				Player.turnMenu();
-				System.out.println(Player.playerLocation);
-				Player.turnMenu();
-				System.out.println(Player.playerLocation);
-
+				Player.greetPlayer();
+			for(int i = 0; i < board.length; i++)	
+				{
+					Player.turnMenu();
+					System.out.println(Player.playerLocation);
+					Player.landOnSquare();
+					//Player.turnMenu();
+					//System.out.println(Player.playerLocation);
+				}
 				//Player.landOnSquare();
 			}
 
