@@ -2,7 +2,8 @@ public class DiceRoller
 	{
 		
 		static boolean doubles;
-		
+		public static int direction = 1;
+		public static int diceRoll;
 		public static int rollDice(int i, int j)
 		    {
 	    	int dieOne = 0;
@@ -13,16 +14,17 @@ public class DiceRoller
 			    {
 			      //roll the dice
 				  int diceRollNumber = (int) (Math.random()*j)+1;
-				  sumOfDice = diceRollNumber+sumOfDice;
-				  System.out.println("You rolled a "+diceRollNumber);
+				  diceRoll = diceRollNumber * direction;
+				  sumOfDice = diceRoll+sumOfDice;
+				  System.out.println("You rolled a "+diceRoll);
 				  
 			      if(k == 0)
 			    	  {
-			    		  dieOne = diceRollNumber;
+			    		  dieOne = diceRoll;
 			    	  }
 			      else if(k == 1)
 			    	  {
-			    		  dieTwo = diceRollNumber;
+			    		  dieTwo = diceRoll;
 			    	  }
 			    }
 			 if(dieOne == dieTwo)
@@ -31,7 +33,6 @@ public class DiceRoller
 					
 					System.out.println("You rolled doubles!");
 				 }
-			 //System.out.println();
 			 return sumOfDice;
 		
 		    }

@@ -12,20 +12,25 @@ public class MonopDriver
 			{
 				fillBoard();
 				Player.greetPlayer();
-			
-				
-//				for(BoardSpace b : board)
+				Player.turnMenu();
+				System.out.println(Player.playerLocation);
+				Player.landOnSquare();
+				Player.testFreeParking();
+				Player.turnMenu();
+				System.out.println(Player.playerLocation);
+			}	
+				//for(BoardSpace b : board)
 //					{
 //						System.out.println(b.getType());
 //					}
 				
-				while(Player.stillPlaying)
-					{
-						Player.turnMenu();
-						System.out.println(Player.playerLocation);
-						Player.landOnSquare();
-					}
-			}
+//				while(Player.stillPlaying)
+//					{
+//						Player.turnMenu();
+//						System.out.println(Player.playerLocation);
+//						Player.landOnSquare();
+//					}
+//			}
 
 		public static void fillBoard() throws FileNotFoundException
 			{
