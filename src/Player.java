@@ -16,6 +16,7 @@ public class Player
 		static Scanner userInput = new Scanner(System.in);
 		static ArrayList<BoardSpace> inventory = new ArrayList<BoardSpace>();
 		static int direction = 1;
+			
 		
 		public static void greetPlayer()
 			{
@@ -23,6 +24,9 @@ public class Player
 				playerName = userInput.nextLine();
 				System.out.println("Welcome, " + playerName + "!");
 				System.out.println();
+				
+				System.out.println("Would you like to play Sponge Bob Monopoly or Fortnite Monopoly?");
+				
 			}
 		public static void turnMenu()
 			{
@@ -32,8 +36,8 @@ public class Player
 				if (menuInput == 1)
 					{
 						movePlayer();
-					} else
-					if (menuInput == 2)
+					} 
+				else if (menuInput == 2)
 						{
 							displayPlayerStats();
 						} else
@@ -58,12 +62,8 @@ public class Player
 			}
 		public static void movePlayer()
 			{
-				int playerRoll = DiceRoller.rollDice(2, 6);
+			int playerRoll = DiceRoller.rollDice(2, 6);
 				
-			If (playerLocation = 19)	
-			{
-				DiceRoller.direction*=-1;
-			}
 				if ((playerLocation + playerRoll) < 39)
 					{
 						playerLocation += playerRoll;
@@ -74,10 +74,18 @@ public class Player
 						playerMoney += 200;
 						System.out.println("You passsed GO and collected $200");
 					}
-				else if((MonopDriver.board[playerLocation].getName().equals("Free_Parking")))
-					{
-						DiceRoller.direction *= -1;
-					}
+				
+				if ((playerLocation + playerRoll) < 39)
+						{
+							playerLocation += playerRoll;
+						} 
+					else if((MonopDriver.board[playerLocation].getName().equals("GO")))
+						{
+							playerLocation = (playerLocation + playerRoll) - 40;
+							playerMoney += 200;
+							System.out.println("You passsed GO and collected $200");
+						}
+					
 
 				System.out.println("Your total: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
 				landOnSquare();
@@ -97,8 +105,12 @@ public class Player
 								movePlayer();
 							}
 					} 
-				//if(playerLocation )
-				}
+				else
+					{
+						
+					}
+		}
+		
 		public static void checkForBankruptcy()
 			{
 				
@@ -153,7 +165,8 @@ public class Player
 											if (((Properties) MonopDriver.board[playerLocation]).getNumberOfHousesOwned() >= 4)
 												{
 													System.out.println("Sorry, you have already bought the maximum amount of property on this space.");
-												} else
+												} 
+											else
 												{
 													// this is broken and I don't know how to fix it at this time
 //													((Properties) MonopDriver.board[playerLocation])
@@ -393,27 +406,59 @@ public class Player
 			}
 		public static void testFreeParking()
 		{
-			playerLocation = 19;
-			DiceRoller.diceRoll = 1;
 			
-			
-			if ((playerLocation + DiceRoller.diceRoll) < 39)
-				{
-					playerLocation += DiceRoller.diceRoll;
-				} 
-			else if((MonopDriver.board[playerLocation].getName().equals("GO")))
-				{
-					playerLocation = (playerLocation + DiceRoller.diceRoll) - 40;
-					playerMoney += 200;
-					System.out.println("You passsed GO and collected $200");
-				}
-			else if((MonopDriver.board[playerLocation].getName().equals("Free_Parking")))
-				{
-					DiceRoller.direction *= -1;
-				}
+			int playerRoll = 1;
+			playerLocation = 18;
+			System.out.println("Your total: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
 
-			System.out.println("Your total: " + DiceRoller.diceRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
-			landOnSquare();
+			if (playerLocation == 19)	
+			{
+				DiceRoller.direction*=-1;
+				if ((playerLocation + playerRoll) < 39)
+					{
+						playerLocation += playerRoll;
+					} 
+				else if((MonopDriver.board[playerLocation].getName().equals("GO")))
+					{
+						playerLocation = (playerLocation + playerRoll) - 40;
+						playerMoney += 200;
+						System.out.println("You passsed GO and collected $200");
+					}
+				else
+					{
+						if ((playerLocation + playerRoll) < 39)
+							{
+								playerLocation += playerRoll;
+							} 
+						else if((MonopDriver.board[playerLocation].getName().equals("GO")))
+							{
+								playerLocation = (playerLocation + playerRoll) - 40;
+								playerMoney += 200;
+								System.out.println("You passsed GO and collected $200");
+							}
+					}
+
+				System.out.println("Your total: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
+				
+				if (DiceRoller.doubles == true)
+					{
+						timesRolledDoubles++;
+						if (timesRolledDoubles == 3)
+							{
+								goToJail();
+								inJailTurn();
+							} 
+						else
+							{
+								System.out.println("You rolled doubles, so you get to roll again!");
+								movePlayer();
+							}
+					} 
+				else
+					{
+						
+					}
+			}
 			
 			System.out.println("You won " + freeParkingMoney + "!");
 			playerMoney += freeParkingMoney;
