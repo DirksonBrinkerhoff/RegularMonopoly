@@ -3,33 +3,49 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+
 public class MonopDriver
 	{
 
 		static BoardSpace[] board = new BoardSpace[40];
-
+		static Scanner userInput = new Scanner(System.in);
+		static int monopType;
+		
 		public static void main(String[] args) throws FileNotFoundException
 			{
 				fillBoard();
 				Player.greetPlayer();
+//				System.out.println("Press 1 for regular monopoly or 2 for Sponge Bob Monopoly!");
+//				monopType = userInput.nextInt();										
+//				
+//				if(monopType == 1)
+//					{
+//						fillBoard();
+//					}
+//					else 
+//					{
+//						fillBoardWithSpongeBob();
+//					}
+
+
 //				Player.turnMenu();
 //				System.out.println(Player.playerLocation);
 //				Player.landOnSquare();
-//				Player.testFreeParking();
-//				Player.turnMenu();
-//				System.out.println(Player.playerLocation);
+				Player.testFreeParking();
+				Player.turnMenu();
+				System.out.println(Player.playerLocation);
 				
 //				for(BoardSpace b : board)
 //					{
 //						System.out.println(b.getType());
 //					}
 				
-				while(Player.stillPlaying)
-					{
-						Player.turnMenu();
-						System.out.println(Player.playerLocation);
-						Player.landOnSquare();
-					}
+//				while(Player.stillPlaying)
+//					{
+//						Player.turnMenu();
+//						System.out.println(Player.playerLocation);
+//						Player.landOnSquare();
+//					}
 			}
 
 

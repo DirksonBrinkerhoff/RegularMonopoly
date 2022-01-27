@@ -23,9 +23,7 @@ public class Player
 				System.out.println("What is your name?");
 				playerName = userInput.nextLine();
 				System.out.println("Welcome, " + playerName + "!");
-				System.out.println();
-				
-				System.out.println("Would you like to play Sponge Bob Monopoly or Fortnite Monopoly?");
+				System.out.println();				
 				
 			}
 		public static void turnMenu()
@@ -405,40 +403,23 @@ public class Player
 					}
 			}
 		public static void testFreeParking()
-		{
-			
+		{			
 			int playerRoll = 1;
-			playerLocation = 18;
-			System.out.println("Your total: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
+			playerLocation = 20;
+			System.out.println("Your total: " + ReverseDiceRoller.diceRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
 
-			if (playerLocation == 19)	
-			{
-				DiceRoller.direction*=-1;
-				if ((playerLocation + playerRoll) < 39)
+				if ((playerLocation + ReverseDiceRoller.diceRoll) < 39)
 					{
-						playerLocation += playerRoll;
+						playerLocation += ReverseDiceRoller.diceRoll;
 					} 
 				else if((MonopDriver.board[playerLocation].getName().equals("GO")))
 					{
-						playerLocation = (playerLocation + playerRoll) - 40;
+						playerLocation = (playerLocation + ReverseDiceRoller.diceRoll) - 40;
 						playerMoney += 200;
 						System.out.println("You passsed GO and collected $200");
-					}
-				else
-					{
-						if ((playerLocation + playerRoll) < 39)
-							{
-								playerLocation += playerRoll;
-							} 
-						else if((MonopDriver.board[playerLocation].getName().equals("GO")))
-							{
-								playerLocation = (playerLocation + playerRoll) - 40;
-								playerMoney += 200;
-								System.out.println("You passsed GO and collected $200");
-							}
-					}
+					}					
 
-				System.out.println("Your total: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
+				System.out.println("Your total: " + ReverseDiceRoller.diceRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
 				
 				if (DiceRoller.doubles == true)
 					{
@@ -454,11 +435,7 @@ public class Player
 								movePlayer();
 							}
 					} 
-				else
-					{
 						
-					}
-			}
 			
 			System.out.println("You won " + freeParkingMoney + "!");
 			playerMoney += freeParkingMoney;
@@ -466,3 +443,61 @@ public class Player
 		} 
 		
 	}
+
+
+
+
+
+
+//if (playerLocation == 22)	
+//	{
+//		DiceRoller.direction*=-1;
+//		if ((playerLocation + playerRoll) < 39)
+//			{
+//				playerLocation += playerRoll;
+//			} 
+//		else if((MonopDriver.board[playerLocation].getName().equals("GO")))
+//			{
+//				playerLocation = (playerLocation + playerRoll) - 40;
+//				playerMoney += 200;
+//				System.out.println("You passsed GO and collected $200");
+//			}
+//		else
+//			{
+//				if ((playerLocation + playerRoll) < 39)
+//					{
+//						playerLocation += playerRoll;
+//					} 
+//				else if((MonopDriver.board[playerLocation].getName().equals("GO")))
+//					{
+//						playerLocation = (playerLocation + playerRoll) - 40;
+//						playerMoney += 200;
+//						System.out.println("You passsed GO and collected $200");
+//					}
+//			}
+//
+//		System.out.println("Your total: " + playerRoll + "\nYou landed on " + MonopDriver.board[playerLocation].getName());
+//		
+//		if (DiceRoller.doubles == true)
+//			{
+//				timesRolledDoubles++;
+//				if (timesRolledDoubles == 3)
+//					{
+//						goToJail();
+//						inJailTurn();
+//					} 
+//				else
+//					{
+//						System.out.println("You rolled doubles, so you get to roll again!");
+//						movePlayer();
+//					}
+//			} 
+//		else
+//			{
+//				
+//			}
+//	}
+//	
+//	System.out.println("You won " + freeParkingMoney + "!");
+//	playerMoney += freeParkingMoney;
+//	freeParkingMoney = 100;
