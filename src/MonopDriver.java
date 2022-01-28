@@ -13,8 +13,20 @@ public class MonopDriver
 		
 		public static void main(String[] args) throws FileNotFoundException
 			{
-				fillBoard();
-				Player.greetPlayer();
+				System.out.println("Press 1 for regular monopoly or 2 for Sponge Bob Monopoly!");
+				monopType = userInput.nextInt();
+				
+				if(monopType == 1)
+				{
+					fillBoard();
+				}
+				else 
+				{
+					fillBoardWithSpongeBob();
+				}	
+				
+				//fillBoard();
+				RunMonopoly.greetPlayer();
 //				System.out.println("Press 1 for regular monopoly or 2 for Sponge Bob Monopoly!");
 //				monopType = userInput.nextInt();										
 //				
@@ -31,21 +43,21 @@ public class MonopDriver
 //				Player.turnMenu();
 //				System.out.println(Player.playerLocation);
 //				Player.landOnSquare();
-				Player.testFreeParking();
-				Player.turnMenu();
-				System.out.println(Player.playerLocation);
+//				Player.testFreeParking();
+//				Player.turnMenu();
+//				System.out.println(Player.playerLocation);
 				
 //				for(BoardSpace b : board)
 //					{
 //						System.out.println(b.getType());
 //					}
 				
-//				while(Player.stillPlaying)
-//					{
-//						Player.turnMenu();
-//						System.out.println(Player.playerLocation);
-//						Player.landOnSquare();
-//					}
+				while(RunMonopoly.stillPlaying)
+					{
+						RunMonopoly.turnMenu();
+						System.out.println(RunMonopoly.playerLocation);
+						RunMonopoly.landOnSquare();
+					}
 			}
 
 

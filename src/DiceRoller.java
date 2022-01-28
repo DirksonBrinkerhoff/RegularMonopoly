@@ -34,4 +34,11 @@ public class DiceRoller
 			 return sumOfDice;
 		
 		    }
+		public static int DiceRoll()
+		    {
+		    	int dice1 = (int) (Math.random()*6+1);
+		    	int dice2 = (int) (Math.random()*6+1);
+		    	int diceSum = dice1+dice2;
+		    	return diceSum;
+		    }
 	}

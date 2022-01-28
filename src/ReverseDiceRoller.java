@@ -13,7 +13,8 @@ public class ReverseDiceRoller
 			for(int k = 0 ; k < i ; k++)
 			   {
 			     //roll the dice
-				 int diceRollNumber = ((int) (Math.random()*j)-10);
+				 int diceRollNumber = (int) (Math.random()*j);
+				 diceRollNumber *= -1;
 				 sumOfDice = diceRollNumber+sumOfDice;
 				 System.out.println("You rolled a "+ diceRollNumber);
 				  
@@ -33,6 +34,16 @@ public class ReverseDiceRoller
 					System.out.println("You rolled doubles!");
 				 }
 			 return sumOfDice;
-		
 		    }
+		    
+			public static int ReverseDiceRoll()
+		    {
+		    	int dice1 = (int) (Math.random()*6+1);
+		    	int dice2 = (int) (Math.random()*6+1);
+		    	int diceSum = (dice1+dice2) * -1;
+		    	
+		    	return diceSum;
+		    }
+		
+			
 	}
