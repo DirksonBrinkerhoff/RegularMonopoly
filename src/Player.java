@@ -7,7 +7,7 @@ public class Player
 		private int balance;
 		private String inventory;
 		private boolean cwDirection;
-		
+		//dirk
 		public Player(String n, int l, boolean in, int b, String inv, boolean cw)
 			{
 				name = n;
